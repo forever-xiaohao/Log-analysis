@@ -1,0 +1,137 @@
+@charset "UTF-8";
+.detail_center{
+	width:1200px;
+	height:auto;
+	margin:0 auto;
+}
+.detail_cent_top{
+	width: 1030px;
+	height: 40px;
+	float: right;
+	margin-top: 14px;
+}
+.detail_cent_top p{
+	line-height: 40px;
+	font-size: 13px;
+	font-weight: 600;
+	padding-left: 10px;
+}
+.trend_w{
+	width: 1030px;
+	height: 30px;
+	border-bottom: 2px solid #666666;
+	float: right;
+}
+.bb_w{
+	line-height: 30px;
+	padding-left: 8px;
+	font-size: 13px;
+	width: 54px;
+	float:left;
+}
+.bb_t{
+	line-height: 30px;
+	font-size: 13px;
+	float:left;
+	padding: 0 10px 0 10px;
+	background-color: #666666;
+}
+.detail_table{
+	width: 1028px;
+	height:auto;
+	border: solid 1px #e4e8e7; 
+	float: right;
+}
+.tr_time{
+	width: 110px;
+	height: 35px;
+	background-color:#e7e7e7;
+}
+.tr_time p{
+	line-height: 35px;
+	padding-left: 8px;
+	font-weight: 600;
+	font-size: 13px;
+}
+.tr_num1{
+	width: 329px;
+	height: 35px;
+	background-color:#e7e7e7;
+}
+.tr_num1 p{
+	text-align: left;
+	font-size: 13px;
+	font-weight: 600;
+}
+.tr_num2{
+	width: 160px;
+	height: 35px;
+	background-color:#e7e7e7;
+}
+.tr_num2 p{
+	text-align: left;
+	font-size: 13px;
+	padding-right: 8px;
+	font-weight: 600;
+}
+.tr_num3{
+	width: 100px;
+	height: 35px;
+	background-color:#e7e7e7;
+}
+.tr_num3 p{
+	text-align: left;
+	font-size: 13px;
+	padding-right: 8px;
+	font-weight: 600;
+}
+
+
+.tr_times{
+	width: 110px;
+	height: 35px;
+	border-bottom: dashed 1px #e7e7e7;
+}
+.tr_times p{
+	line-height: 30px;
+	padding-left: 8px;
+	font-size: 12px;
+}
+
+.tr_nums_1{
+	width: 329px;
+	height: 35px;
+	border-bottom: dashed 1px #e7e7e7;
+}
+.tr_nums_1 p{
+	text-align: left;
+	font-size: 12px;
+}
+.tr_nums_1 a{
+	color:#1676b3;
+}
+.tr_nums_1 a:hover{
+	color: black;
+}
+
+.tr_nums_2{
+	width: 160px;
+	height: 35px;
+	border-bottom: dashed 1px #e7e7e7;
+}
+.tr_nums_2 p{
+	text-align: left;
+	font-size: 12px;
+	padding-right: 8px;
+}
+.tr_nums_3{
+	width: 100px;
+	height: 35px;
+	border-bottom: dashed 1px #e7e7e7;
+}
+.tr_nums_3 p{
+	text-align: left;
+	font-size: 12px;
+	padding-right: 8px;
+}
+.tb_color{background-color:#eeb49b;}

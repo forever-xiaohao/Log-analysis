@@ -1,0 +1,158 @@
+@charset "utf-8";
+.guide_center{
+	width:1200px;
+	height:auto;
+	margin:0 auto;
+}
+#guide_bar{
+	width: 1030px;
+	height: 420px;
+	margin: 0 auto;
+	font-size: 12px;
+}
+/*tab框部分*/
+
+.menu1box{
+position:relative;
+overflow:hidden;
+height:30px;
+width:1032px;
+float: right;
+text-align:left;
+}
+#menu1{
+position:absolute;
+top:0;
+left:0;
+z-index:1;
+
+}
+#menu1 li{
+float:left;
+display:block;
+cursor:pointer;
+width:100%;
+text-align:center;
+line-height:30px;
+height:30px;
+}
+#menu1 li a{
+	font-size: 13px;
+	padding:0 16px 0 16px;
+	color: black;
+	}
+#menu1 li.hover{
+background-color: #666666;
+border-left:1px solid #e4e8e7;
+border-top:1px solid #e4e8e7;
+border-right:1px solid #e4e8e7;
+}
+.main1box{
+clear:both;
+margin-top:-1px;
+border:1px solid #e4e8e7;
+height:100%;
+float: right;
+
+width:1030px;
+}
+#main1 ul{
+display: none;
+}
+#main1 ul.block{
+display: block;
+}
+
+.tr_num1{
+	width: 600px;
+	height: 35px;
+	background-color:#e7e7e7;
+}
+.tr_num1 p{
+	text-align: left;
+	font-size: 13px;
+	font-weight: 600;
+}
+.tr_num2{
+	width: 160px;
+	height: 35px;
+	background-color:#e7e7e7;
+}
+.tr_num2 p{
+	text-align: left;
+	font-size: 13px;
+	padding-right: 8px;
+	font-weight: 600;
+}
+.tr_num4{
+	width: 160px;
+	height: 35px;
+	background-color:#e7e7e7;
+}
+.tr_num4 p{
+	text-align: left;
+	font-size: 13px;
+	padding-right: 8px;
+	font-weight: 600;
+}
+.tr_num3{
+	width: 110px;
+	height: 35px;
+	background-color:#e7e7e7;
+}
+.tr_num3 p{
+	text-align: left;
+	font-size: 13px;
+	padding-right: 8px;
+	font-weight: 600;
+}
+
+.tr_nums_1{
+	width: 600px;
+	height: 35px;
+	border-bottom: dashed 1px #e7e7e7;
+}
+.tr_nums_1 p{
+	text-align: left;
+	font-size: 12px;
+}
+.tr_nums_1 a{
+	color:#1676b3;
+}
+.tr_nums_1 a:hover{
+	color: black;
+}
+
+.tr_nums_2{
+	width: 160px;
+	height: 35px;
+	border-bottom: dashed 1px #e7e7e7;
+}
+.tr_nums_2 p{
+	text-align: left;
+	font-size: 12px;
+	padding-right: 8px;
+}
+
+.tr_nums_4{
+	width: 160px;
+	height: 35px;
+	border-bottom: dashed 1px #e7e7e7;
+}
+.tr_nums_4 p{
+	text-align: left;
+	font-size: 12px;
+	padding-right: 8px;
+}
+
+.tr_nums_3{
+	width: 108px;
+	height: 35px;
+	border-bottom: dashed 1px #e7e7e7;
+}
+.tr_nums_3 p{
+	text-align: left;
+	font-size: 12px;
+	padding-right: 8px;
+}
+.tb_color{background-color:#eeb49b;}

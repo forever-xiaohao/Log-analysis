@@ -1,0 +1,139 @@
+@charset "utf-8";
+.trend_center{
+	width:1200px;
+	height:auto;
+	margin:0 auto;
+}
+
+
+
+
+#trend_line{
+	width: 1030px;
+	height: 360px;
+	float: right;
+	font-size: 12px;
+	padding-top: 8px;
+}
+.trend_w{
+	width: 1030px;
+	height: 30px;
+	border-bottom: 2px solid #666666;
+	float: right;
+}
+.bb_w{
+	line-height: 30px;
+	padding-left: 8px;
+	font-size: 13px;
+	width: 54px;
+	float:left;
+}
+.bb_t{
+	line-height: 30px;
+	font-size: 13px;
+	float:left;
+	padding: 0 10px 0 10px;
+	background-color: #666666;
+}
+.tr_table{
+	width: 1028px;
+	height: auto;
+	border: solid 1px #e4e8e7; 
+	float: right;
+}
+.tr_time{
+	width: 160px;
+	height: 35px;
+	background-color:#e7e7e7;
+}
+.tr_time p{
+	line-height: 35px;
+	padding-left: 8px;
+	font-weight: 600;
+	font-size: 13px;
+}
+.tr_num{
+	width: 216px;
+	height: 35px;
+	background-color:#e7e7e7;
+}
+.tr_num p{
+	float: right;
+	font-size: 13px;
+	font-weight: 600;
+}
+.tr_num_1{
+	width: 216px;
+	height: 35px;
+	background-color:#e7e7e7;
+}
+.tr_num_1 p{
+	float: right;
+	font-size: 13px;
+	padding-right: 8px;
+	font-weight: 600;
+}
+.tr_times{
+	width: 160px;
+	height: 35px;
+	border-bottom: 1px dashed  #e7e7e7;
+}
+.tr_times p{
+	line-height: 35px;
+	padding-left: 8px;
+	font-weight: 600;
+	font-size: 13px;
+}
+.tr_nums{
+	width: 217px;
+	height: 35px;
+	border-bottom: 1px dashed  #e7e7e7;
+}
+.tr_nums p{
+	float: right;
+	font-size: 13px;
+	font-weight: 600;
+}
+.tr_nums_1{
+	width: 217px;
+	height: 35px;
+	border-bottom: 1px dashed  #e7e7e7;
+}
+.tr_nums_1 p{
+	float: right;
+	font-size: 13px;
+	padding-right: 8px;
+	font-weight: 600;
+}
+
+.tb_color {background-color:#eeb49b;}
+
+.tr_times_2{
+	width: 160px;
+	height: 35px;
+	border-bottom: 1px dashed  #e7e7e7;
+}
+.tr_times_2 p{
+	line-height: 35px;
+	padding-left: 8px;
+	font-size: 12px;
+}
+.tr_nums_2{
+	width: 217px;
+	height: 35px;
+	border-bottom: 1px dashed  #e7e7e7;
+}
+.tr_nums_2 p{
+	float: right;
+	font-size: 12px;
+}
+.tr_nums_1_2{
+	width: 217px;
+	height: 35px;
+	border-bottom: 1px dashed #e7e7e7;
+}
+.tr_nums_1_2 p{
+	float: right;
+	font-size: 12px;
+	padding-right: 8px;
+}

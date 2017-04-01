@@ -1,0 +1,391 @@
+
+所有数据表均位于aboutyun数据库
+
+创建数据库：create databases aboutyun;
+
+一、浏览次数PV，IP数，站内总来访次数，时间段，时间
+
+HIVE表设计：
+表名：AllStatistics
+字段：PVNum int
+      IPNum int
+      TotalNum int
+      hours int
+      date string
+create table AllStatistics(
+      PVNum int,
+      IPNum int,
+      TotalNum int,
+      hours int,
+      date string)
+partitioned by (day string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+默认不允许设置动态分区需要设置：
+set hive.exec.dynamic.partition=true;
+set hive.exec.dynamic.partition.mode=nostrick;
+
+insert into table AllStatistics partition(day)
+select count(distinct split(url,'分隔符')[0]), count(distinct ipaddress),count(url),hour(accresstime),to_date(accresstime),to_date(accresstime) as day from default.logtable group by hour(accresstime),to_date(accresstime);
+
+
+Mysql表设计：
+表名：AllStatistics
+字段：PVNum int
+      IPNum int
+      TotalNum int
+      hours int
+      date DATETIME
+
+create table AllStatistics(
+	PVNum int,
+	IPNum int,
+	TotalNum int,
+	hours int,
+	date varchar(20));
+
+sqoop export --connect jdbc:mysql://localhost:3306/aboutyun --username root -P --table AllStatistics --export-dir /user/hive/warehouse/aboutyun.db/allstatistics/day=2014-07-11/000000_0 --input-fields-terminated-by ','
+
+二。来路域名统计（域名，来访次数，IP数，站内总来访次数，时间段，日期）
+HIVE表设计：
+表名：FromHostStatistics
+字段：
+	Host string
+	ComeNum int
+	IPNum int
+	TotalNum int
+	hours int
+	date string
+
+create table FromHostStatistics(
+      Host string,
+      ComeNum int,
+      IPNum int,
+      TotalNum int,
+      hours int,
+      date string)
+partitioned by (day string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+insert into table FromHostStatistics partition(day)
+select parse_url(split(url,'分隔符')[1],'HOST') , count(distinct parse_url(split(url,'分隔符')[1],'HOST')),count(distinct ipaddress),count(url),hour(accresstime),to_date(accresstime),to_date(accresstime) as day from default.logtable group by parse_url(split(url,'分隔符')[1],'HOST'),hour(accresstime),to_date(accresstime);
+
+
+Mysql表设计：
+表名：FromHostStatistics
+字段：
+	Host varchar(50)
+	ComeNum int
+	IPNum int
+	TotalNum int
+	hours int
+	date varchar(20)
+
+create table FromHostStatistics(
+	Host varchar(50) NOT NULL,
+	ComeNum int,
+	IPNum int,
+	TotalNum int,
+	hours int,
+	date varchar(20));
+
+
+sqoop export --connect jdbc:mysql://localhost:3306/aboutyun --username root -P --table FromHostStatistics --export-dir /user/hive/warehouse/aboutyun.db/fromhoststatistics/day=2014-07-11/000000_0 --input-fields-terminated-by ','
+
+
+三．来路页面：（来路页面，来访次数，IP数，站内总次数，时间段，日期）
+Hive表：FromPageStatistics
+字段：
+	FromPage string
+	fromNum int
+	IPNum int
+	TotalNum int
+	hours int
+	date string
+
+create table FromPage(
+FromPage string,
+FromNum int,
+IPNum int,
+TotalNum int,
+hours int,
+date string)
+partitioned by (day string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+create table FromPageStatistics(
+FromPage string,
+FromNum int,
+IPNum int,
+TotalNum int,
+hours int,
+date string)
+partitioned by (day string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+insert into table FromPageStatistics partition(day)
+select split(url,'分隔符')[1], count(distinct split(url,'分隔符')[1]),count(distinct ipaddress),count(url),hour(accresstime),to_date(accresstime),to_date(accresstime) as day from default.logtable group by split(url,'分隔符')[1],hour(accresstime),to_date(accresstime);
+
+insert into table frompage partition(day)
+select * from FromPageStatistics where fromnum is not null;
+
+Mysql表设计：
+表名：FromPageStatistics
+字段：
+	FromPage TEXT
+	FromNum int
+	IPNum int
+	TotalNum int
+	hours int
+	date VAHRCHAR(20)
+
+
+create table FromPageStatistics(
+	FromPage TEXT,
+	FromNum int,
+	IPNum int,
+	TotalNum int,
+	hours int,
+	date VARCHAR(20));
+
+
+
+sqoop export --connect jdbc:mysql://localhost:3306/aboutyun --username root -P --table FromPageStatistics --export-dir /user/hive/warehouse/aboutyun.db/frompage/day=2014-07-11/000000_0 --input-fields-terminated-by ','
+
+
+四．搜索词统计（搜索词，搜索数量，日期）------用原数据
+
+Hive表设计
+表名称：SearchStatistics
+字段：
+	SearchWord string
+	SearchNum int
+	date	string
+
+create table SearchStatistics(
+SearchWord string,
+SearchNum int,
+date string)
+partitioned by (day string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+
+insert into table searchstatistics partition(day) 
+select parse_url(split(url,'分隔符')[1], 'QUERY','srchtxt'),count(parse_url(split(url,'分隔符')[1], 'QUERY','srchtxt')),to_date(accresstime),to_date(accresstime) as day from default.logtable where parse_url(split(url,'分隔符')[1], 'QUERY','srchtxt') is not null Group by parse_url(split(url,'分隔符')[1], 'QUERY','srchtxt'),to_date(accresstime);
+
+Mysql表设计：
+表名称：SearchStatistics
+字段：
+	SearchWord TEXT
+	SearchNum int
+	date	varchar(20)
+
+create table SearchStatistics(
+	SearchWord text,
+	SearchNum int,
+	date varchar(20));
+
+sqoop export --connect jdbc:mysql://localhost:3306/aboutyun --username root -P --table SearchStatistics --export-dir /user/hive/warehouse/aboutyun.db/searchstatistics/day=2014-07-11/000000_0 --input-fields-terminated-by ','
+
+五。首页面折线图（浏览次数UV，站内访问总次数，IP数）-----参考（一）
+
+六．访问详情（）
+表名：AccessDetail
+字段：accresstime DATETIME
+      fromurl TEXT
+      comeurl TEXT
+      ipaddress VARCHAR(20)
+MYSQL数据库：
+create table AccessDetail(
+	accresstime DATETIME,
+	fromurl TEXT,
+	comeurl TEXT,
+	ipaddress VARCHAR(20)
+	);
+Hive表：
+//此表不要创建在aboutyun数据库下
+create table AccessDetail(
+accresstime string,
+fromurl string,
+comeurl string,
+ipaddress string)
+partitioned by (day string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+
+
+create table AccessDetail_true(
+accresstime string,
+fromurl string,
+comeurl string,
+ipaddress string)
+partitioned by (day string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+Hive表中填充数据：
+
+insert overwrite table AccressDetail partition(day)
+select accresstime,split(url,'分隔符')[1],split(split(url,'分隔符')[0],' ')[0],ipaddress,to_date(accresstime) as day from default.logtable where substr(split(url,'分隔符')[1],0,23) != 'http://www.aboutyun.com'and split(url,'分隔符')[0] !='-' order by accresstime;
+
+insert into table AccessDetail_true partition(day)
+select * from default.accressdetail where length(ipaddress) < 20 order by accresstime;
+
+sqoop export --connect jdbc:mysql://localhost:3306/aboutyun --username root -P --table AccessDetail --export-dir /user/hive/warehouse/aboutyun.db/accessdetail_true/day=2014-07-11/000000_0 --input-fields-terminated-by ','
+
+七。受访页面(受访url，受访数，IP数，站内总访问数，时间段，日期)
+
+Hive表设计
+表名：VisitPageStatistics
+字段：
+	VisitUrl string
+	VisitNum int
+	IPNum int
+	TotalNum int
+	hours int
+	date string
+
+create table VisitPageStatistics(
+VisitUrl string,
+VisitNum int,
+IPNum int,
+TotalNum int,
+hours int,
+date string)
+partitioned by (day string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+
+insert into table VisitPageStatistics partition(day)
+select split(url,'分隔符')[0], count(distinct split(url,'分隔符')[0]),count(distinct ipaddress),count(url),hour(accresstime),to_date(accresstime),to_date(accresstime) as day from default.logtable group by split(url,'分隔符')[0],hour(accresstime),to_date(accresstime);
+
+create table VisitPage(
+VisitUrl string,
+VisitNum int,
+IPNum int,
+TotalNum int,
+hours int,
+date string)
+partitioned by (day string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+
+insert into table visitpage partition(day)
+select * from visitpagestatistics where ipnum is not null and totalnum is not null;
+Mysql表设计
+表名：VisitPageStatistics
+字段：
+	VisitUrl text
+	VisitNum int
+	IPNum int
+	TotalNum int
+	hours int
+	date varchar(20)
+
+create table VisitPageStatistics(
+	VisitUrl text,
+	VisitNum int,
+	IPNum int,
+	TotalNum int,
+	hours int,
+	date varchar(20)
+	);
+
+sqoop export --connect jdbc:mysql://localhost:3306/aboutyun --username root -P --table VisitPageStatistics --export-dir /user/hive/warehouse/aboutyun.db/visitpage/day=2014-07-11/000000_0 --input-fields-terminated-by ','
+
+
+
+八。终端详情（浏览器）(浏览器名称，浏览PV，IP数，全站总访问量，日期)
+
+Hive表设计：
+表名：BrowserStatistics
+字段：
+	userbrowser string
+	PVNum int
+	IPNum int
+	TotalNum int
+	date string
+
+create table BrowserStatistics(
+userbrowser string,
+PVNum int,
+IPNum int,
+TotalNum int,
+date string)
+partitioned by (day string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+
+insert into table BrowserStatistics partition(day)
+select userbrowser,count(distinct split(url,'分隔符')[0]), count(distinct ipaddress),count(url),to_date(accresstime),to_date(accresstime) as day from default.logtable group by userbrowser,to_date(accresstime);
+
+
+Mysql表设计：
+
+表名：BrowserStatistics
+字段：
+	userbrowser varchar(20)
+	PVNum int
+	IPNum int
+	TotalNum int
+	date varchar(20)
+
+
+create table BrowserStatistics(
+	userbrowser varchar(20),
+	PVNum int,
+	IPNum int,
+	TotalNum int,
+	date varchar(20)
+	);
+
+
+sqoop export --connect jdbc:mysql://localhost:3306/aboutyun --username root -P --table BrowserStatistics --export-dir /user/hive/warehouse/aboutyun.db/browserstatistics/day=2014-07-11/000000_0 --input-fields-terminated-by ','
+
+--------------------------------------------------------------------------------
+IP数据库的创建：
+表名：ip_data
+字段：ipstart int,
+      ipend int,
+      address string,
+      operator  string
+
+create table ip_data(
+ipstart string,
+ipend string,
+address string,
+operator string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ' '
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+
+
+create table datas(
+info string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ' '
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+数据导入：load data local inpath '/home/ch-hduser/myfile/ipdata.txt' into table ip_data;
+
+select split(ipstart,"\\.")[0]*256*256*256+split(ipstart,"\\.")[1]*256*256+split(ipstart,"\\.")[2]*256+split(ipstart,"\\.")[3] from ip_data limit 10;
+

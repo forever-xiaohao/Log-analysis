@@ -1,0 +1,20 @@
+@charset "UTF-8";
+.module_center{
+	width:1200px;
+	height:auto;
+	margin:0 auto;
+}
+#module_bar{
+	width: 1030px;
+	height: 420px;
+	margin-top: 10px;
+	font-size: 12px;
+	float: right;
+}
+#module2_gra{
+	width: 1030px;
+	height: 420px;
+	margin-top: 10px;
+	font-size: 12px;
+	float: right;
+}
